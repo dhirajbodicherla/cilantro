@@ -10,6 +10,7 @@ var statusMessageNode = $('status-message');
 var statusSubMessageNode = $('status-sub-message');
 var sendKissNode = document.querySelector('.kiss');
 var sendHugNode = document.querySelector('.hug');
+var changeBGNode = document.querySelector('.change-bg');
 var shareData;
 
 var closingElements = document.querySelectorAll('.close');
@@ -34,6 +35,7 @@ getSignature(function(signature) {
   postingFormNode.onsubmit = handleFormSubmit.bind(this, signature);
   sendHugNode.onclick = handleSendHug.bind(this, signature);
   sendKissNode.onclick = handleSendKiss.bind(this, signature);
+  changeBGNode.onclick = getImages.bind(this, signature);
 });
 
 getShareData(function(loadedShareData) {
@@ -115,6 +117,27 @@ function handleFormSubmit(signature, event) {
   xhr.send('message=' + encodeURIComponent(note));
 }
 
+function getImages(signature, event){
+  event.preventDefault();
+
+  var url = 'https://avocado.io/api/media?avosig=' + encodeURIComponent(signature);
+  url += (last === undefined) ? '' : '&before=' + last;
+  url += (first === undefined) ? '' + '&after=' + first;
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    
+  };
+  xhr.onerror = function() {
+    setStatus('Failure: ' + xhr.responseText);
+  };
+  xhr.open(
+      'GET',
+      url,
+      true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.send();
+}
+
 function getShareData(callback) {
   chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
     var tab = tabs[0];
@@ -144,6 +167,7 @@ function getSignature(callback) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function() {
     var match = SIGNATURE_RE.exec(xhr.responseText);
+    sign = match[1];
     if (!match) {
       setStatus('Not logged into Avocado',
         'Oopsie, looks like you need to be logged into Avocado before you can send links with Cilantro.');

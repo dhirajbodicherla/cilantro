@@ -7,35 +7,41 @@
 </head>
 <body>
 <div id="content">
-  <h1>Send to Avocado</h1>
+  <div id="send-to-boo">
+    <h1>Send to Avocado</h1>
 
-  <div id="status">
-    <div id="status-message"></div>
-    <div id="status-sub-message"></div>
-    <button class="close">Close</button>
+    <div id="status">
+      <div id="status-message"></div>
+      <div id="status-sub-message"></div>
+      <button class="close">Close</button>
+    </div>
+
+    <form id="posting-form">
+      <div id="note-container">
+        <pre><span></span><br></pre>
+        <textarea id="note" placeholder="Add a comment"></textarea>
+      </div>
+
+      <label id="share-container">
+        <input type="checkbox" id="share-checkbox">
+        Share "<a id="share-link" target="_blank"></a>"
+      </label>
+
+      <div id="buttons">
+        <span class="close">Cancel</span>
+        <input type="submit" value="Send">
+      </div>
+    </form>
+    <img src="popup-logo.png" id="logo" width="82" height="82" alt="Cilantro logo">
+    <div id="xoxo">
+      Or you can send your boo<br>
+      <span class="hug">a hug</span> or
+      <span class="kiss">a kiss</span>!<br>
+      <span class="change-bg">change background</span>
+    </div>
   </div>
-
-  <form id="posting-form">
-    <div id="note-container">
-      <pre><span></span><br></pre>
-      <textarea id="note" placeholder="Add a comment"></textarea>
-    </div>
-
-    <label id="share-container">
-      <input type="checkbox" id="share-checkbox">
-      Share "<a id="share-link" target="_blank"></a>"
-    </label>
-
-    <div id="buttons">
-      <span class="close">Cancel</span>
-      <input type="submit" value="Send">
-    </div>
-  </form>
-  <img src="popup-logo.png" id="logo" width="82" height="82" alt="Cilantro logo">
-  <div id="xoxo">
-    Or you can send your boo<br>
-    <span class="hug">a hug</span> or
-    <span class="kiss">a kiss</span>!
+  <div id="change-bg">
+    <h1>Change background</h1>
   </div>
 </div>
 <script src="popup.js"></script>

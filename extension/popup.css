@@ -129,14 +129,15 @@ input[type="submit"] {
   right: 0;
   border-top-left-radius: 8px;
   background: #43551c;
-  height: 40px;
+  height: 45px;
   padding: 6px 36px 12px 6px;
   text-align: right;
   font-size: 16px;
 }
 
 #xoxo .hug,
-#xoxo .kiss {
+#xoxo .kiss,
+#xoxo .change-bg {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -174,4 +175,10 @@ input[type="submit"] {
 
 .retina .has-status #status {
   font-weight: 200;
+}
+#send-to-boo{
+  display: none;
+}
+#change-bg{
+  display: block;
 }
