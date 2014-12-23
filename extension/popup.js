@@ -8,10 +8,15 @@ var shareCheckboxNode = $('share-checkbox');
 var shareLinkNode = $('share-link');
 var statusMessageNode = $('status-message');
 var statusSubMessageNode = $('status-sub-message');
+var changeBGNode = $('change-bg-btn');
 var sendKissNode = document.querySelector('.kiss');
 var sendHugNode = document.querySelector('.hug');
-var changeBGNode = document.querySelector('.change-bg');
+var moreImagesNode = $('more_images');
+var imagesContainer = $('images-container')
+var backToMain = $('back_to_main')
+// var changeBGNode = document.querySelector('.change-bg');
 var shareData;
+var imagesBefore = -1;
 
 var closingElements = document.querySelectorAll('.close');
 for (var i = 0, closingEl; closingEl = closingElements[i]; i++) {
@@ -36,7 +41,12 @@ getSignature(function(signature) {
   sendHugNode.onclick = handleSendHug.bind(this, signature);
   sendKissNode.onclick = handleSendKiss.bind(this, signature);
   changeBGNode.onclick = getImages.bind(this, signature);
+  moreImagesNode.onclick = getImages.bind(this, signature);
 });
+backToMain.onclick = function(){
+  $('send-to-boo').style.cssText = "display: block;";
+  $('change-bg-container').style.cssText = "display: none;";
+}
 
 getShareData(function(loadedShareData) {
   if (!loadedShareData || !loadedShareData.url) {
@@ -120,12 +130,14 @@ function handleFormSubmit(signature, event) {
 function getImages(signature, event){
   event.preventDefault();
 
+  $('send-to-boo').style.cssText = "display: none;";
+  $('change-bg-container').style.cssText = "display: block;";
+  
   var url = 'https://avocado.io/api/media?avosig=' + encodeURIComponent(signature);
-  url += (last === undefined) ? '' : '&before=' + last;
-  url += (first === undefined) ? '' + '&after=' + first;
+  url += (imagesBefore === -1) ? '' : '&before=' + imagesBefore;
   var xhr = new XMLHttpRequest();
   xhr.onload = function() {
-    
+    showImages(JSON.parse(xhr.responseText));
   };
   xhr.onerror = function() {
     setStatus('Failure: ' + xhr.responseText);
@@ -136,6 +148,17 @@ function getImages(signature, event){
       true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.send();
+}
+
+function showImages(images){
+  imagesBefore = images[images.length-1].timeCreated;
+  
+  images.forEach(function(image, index){
+    var div = document.createElement('div');
+    div.className = "image";
+    div.style.cssText = "background: url(" + image.thumbnailUrl + ")";
+    imagesContainer.appendChild(div);
+  });
 }
 
 function getShareData(callback) {

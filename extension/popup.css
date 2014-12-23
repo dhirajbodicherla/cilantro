@@ -102,11 +102,17 @@ input[type="submit"] {
   left: 21px;
 }
 
-#share-container {
+#share-container, #change-bg-btn-container {
   font-size: 16px;
   white-space: nowrap;
 }
-
+#change-bg-btn-container{
+  float: right;
+  text-decoration: underline;
+}
+#change-bg-btn-container:hover{
+  cursor: pointer;
+}
 .close {
   font-size: 16px;
   cursor: pointer;
@@ -115,7 +121,7 @@ input[type="submit"] {
 #buttons {
   bottom: 0;
   right: 0;
-  padding: 0 21px 21px 0;
+  padding: 16px 21px 21px 0;
   text-align: right;
 }
 
@@ -177,8 +183,41 @@ input[type="submit"] {
   font-weight: 200;
 }
 #send-to-boo{
+  display: block;
+}
+#change-bg-container{
   display: none;
 }
-#change-bg{
+#images-container{
+  width: 350px;
+  position: relative;
+}
+#images-container:after{
   display: block;
+  content: '';
+  clear: both;
+}
+.image{
+  width: 100px;
+  height: 100px;
+  float: left;
+  opacity: 0.7;
+}
+.image:hover{
+  cursor: pointer;
+  opacity: 1;
+}
+#more_images{
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0px;
+}
+#more_images:hover{
+  cursor: pointer;
+  outline: none;
+}
+#back_to_main{
+  float: right;
+  font-size: 16px;
+  text-decoration: underline;
 }
