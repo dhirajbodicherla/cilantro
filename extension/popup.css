@@ -107,8 +107,9 @@ input[type="submit"] {
   white-space: nowrap;
 }
 #change-bg-btn-container{
-  float: right;
+  float: left;
   text-decoration: underline;
+  padding: 4px;
 }
 #change-bg-btn-container:hover{
   cursor: pointer;
@@ -121,7 +122,7 @@ input[type="submit"] {
 #buttons {
   bottom: 0;
   right: 0;
-  padding: 16px 21px 21px 0;
+  padding: 28px 21px 21px 0;
   text-align: right;
 }
 
@@ -216,8 +217,10 @@ input[type="submit"] {
   cursor: pointer;
   outline: none;
 }
-#back_to_main{
+#back_to_main,
+#clear_image{
   float: right;
   font-size: 16px;
   text-decoration: underline;
+  padding: 5px;
 }

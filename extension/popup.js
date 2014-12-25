@@ -14,6 +14,7 @@ var sendHugNode = document.querySelector('.hug');
 var moreImagesNode = $('more_images');
 var imagesContainer = $('images-container')
 var backToMain = $('back_to_main')
+var clearImage = $('clear_image')
 // var changeBGNode = document.querySelector('.change-bg');
 var shareData;
 var imagesBefore = -1;
@@ -43,9 +44,17 @@ getSignature(function(signature) {
   changeBGNode.onclick = getImages.bind(this, signature);
   moreImagesNode.onclick = getImages.bind(this, signature);
 });
+
 backToMain.onclick = function(){
   $('send-to-boo').style.cssText = "display: block;";
   $('change-bg-container').style.cssText = "display: none;";
+}
+
+clearImage.onclick = function(){
+  window.localStorage.setItem('imageSelected', null);
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { method: "clear" }, function(response) {});
+  });
 }
 
 getShareData(function(loadedShareData) {
@@ -158,7 +167,18 @@ function showImages(images){
     div.className = "image";
     div.style.cssText = "background: url(" + image.thumbnailUrl + ")";
     imagesContainer.appendChild(div);
+    div.onclick = handleImageClick.bind(this,image);
   });
+}
+
+function handleImageClick(media, e) {
+  if (e.target.nodeName === 'DIV') {
+    window.localStorage.setItem('imageSelected', media.imageUrls.large);
+    e.target.className += e.target.className ? ' selected' : 'selected';
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { method: "refresh", url: media.imageUrls.large}, function(response) {});
+    });
+  }
 }
 
 function getShareData(callback) {

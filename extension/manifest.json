@@ -12,6 +12,16 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://avocado.io/*"],
+      "js": ["content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
   "permissions": [
     "https://avocado.io/",
     "tabs"
